@@ -115,7 +115,7 @@
 
 	</dependencies>
 
-	<!-- <build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -131,19 +131,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build> -->
-
-	<build>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.1</version> <!-- or newer -->
-            <configuration>
-                <release>21</release> <!-- or the version you need -->
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
+	</build>
 
 </project>
