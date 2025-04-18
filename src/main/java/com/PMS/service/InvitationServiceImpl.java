@@ -20,7 +20,7 @@ public class InvitationServiceImpl implements InvitationService {
     @Autowired
     private EmailService emailService;
 
-    @Value("${app.frontend.url}")
+    @Value("${app.frontend.url:http://localhost:5173}")
     private String frontendUrl;
 
     @Override
@@ -40,7 +40,6 @@ public class InvitationServiceImpl implements InvitationService {
 
         String invitationLink = frontendUrl + "/accept_invitation?token=" + invitationToken;
         System.out.println("Frontend URL in use: " + frontendUrl);
-
 
         emailService.sendEmailWithToken(email, invitationLink);
 
