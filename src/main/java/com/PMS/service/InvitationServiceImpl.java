@@ -39,6 +39,8 @@ public class InvitationServiceImpl implements InvitationService {
         // invitationToken;
 
         String invitationLink = frontendUrl + "/accept_invitation?token=" + invitationToken;
+        System.out.println("Frontend URL in use: " + frontendUrl);
+
 
         emailService.sendEmailWithToken(email, invitationLink);
 
