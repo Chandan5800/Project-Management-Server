@@ -3,6 +3,7 @@ package com.PMS.service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.PMS.model.Invitation;
@@ -19,6 +20,9 @@ public class InvitationServiceImpl implements InvitationService {
     @Autowired
     private EmailService emailService;
 
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
+
     @Override
     public void sendInvitation(String email, Long projectId) throws MessagingException {
         String invitationToken = UUID.randomUUID().toString();
@@ -30,15 +34,20 @@ public class InvitationServiceImpl implements InvitationService {
 
         invitationRepository.save(invitation);
 
-        String invitationLink = "https://project-management-ivory.vercel.app/accept_invitation?token=" + invitationToken;
+        // String invitationLink =
+        // "http://project-management-ivory.vercel.app/accept_invitation?token=" +
+        // invitationToken;
+
+        String invitationLink = frontendUrl + "/accept_invitation?token=" + invitationToken;
+
         emailService.sendEmailWithToken(email, invitationLink);
-        
+
     }
 
     @Override
     public Invitation acceptInvitation(String token, Long userId) throws Exception {
         Invitation invitation = invitationRepository.findByToken(token);
-        if(invitation == null){
+        if (invitation == null) {
             throw new Exception("Invalid invitaion token");
         }
         return invitation;
@@ -56,5 +65,5 @@ public class InvitationServiceImpl implements InvitationService {
         Invitation invitation = invitationRepository.findByToken(token);
         invitationRepository.delete(invitation);
     }
-    
+
 }
