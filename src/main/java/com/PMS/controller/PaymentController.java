@@ -30,6 +30,9 @@ public class PaymentController {
     @Autowired
     private UserService userService;
 
+    @Value("${app.frontend.url:http://localhost:5173}")
+    private String frontendUrl;
+
     @PostMapping("/{planType}")
     public ResponseEntity<PaymentLinkResponse> createPaymentLink(@PathVariable PlanType planType,
             @RequestHeader("Authorization") String jwt) throws Exception {
@@ -58,7 +61,7 @@ public class PaymentController {
         notify.put("email", true);
         paymentLinkRequest.put("notify", notify);
 
-        paymentLinkRequest.put("callback_url", "https://project-management-ivory.vercel.app/upgrade_plan/success?planType=" + planType);
+        paymentLinkRequest.put("callback_url", frontendUrl + "/upgrade_plan/success?planType=" + planType);
 
         PaymentLink payment = razorpay.paymentLink.create(paymentLinkRequest);
 
